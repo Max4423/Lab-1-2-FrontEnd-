@@ -1,0 +1,110 @@
+{
+    "testName": "Тест про комп'ютерні ігри",
+    "questions": [
+        {
+            "question": "Хто є розробником гри Euro Truck Simulator 2?",
+            "answers": [
+                {
+                    "answer": "SCS Software",
+                    "isCorrect": true
+                },
+                {
+                    "answer": "Electronic Arts",
+                    "isCorrect": false
+                },
+                {
+                    "answer": "Turn 10 Studios",
+                    "isCorrect": false
+                },
+                {
+                    "answer": "Ubisoft",
+                    "isCorrect": false
+                }
+            ]
+        },
+        {
+            "question": "В якому році вийшла гра Forza Horizon 4?",
+            "answers": [
+                {
+                    "answer": "2018",
+                    "isCorrect": true
+                },
+                {
+                    "answer": "2016",
+                    "isCorrect": false
+                },
+                {
+                    "answer": "2019",
+                    "isCorrect": false
+                },
+                {
+                    "answer": "2020",
+                    "isCorrect": false
+                }
+            ]
+        },
+        {
+            "question": "Яка з гонок є серією від Electronic Arts?",
+            "answers": [
+                {
+                    "answer": "Euro Truck Simulator 2",
+                    "isCorrect": false
+                },
+                {
+                    "answer": "Forza Horizon 4",
+                    "isCorrect": false
+                },
+                {
+                    "answer": "Need for Speed Payback",
+                    "isCorrect": true
+                },
+                {
+                    "answer": "None of the above",
+                    "isCorrect": false
+                }
+            ]
+        },
+        {
+            "question": "Яка з гонок є серією від Electronic Arts?",
+            "answers": [
+                {
+                    "answer": "Euro Truck Simulator 2",
+                    "isCorrect": true
+                },
+                {
+                    "answer": "Forza Horizon 4",
+                    "isCorrect": false
+                },
+                {
+                    "answer": "Need for Speed Payback",
+                    "isCorrect": false
+                },
+                {
+                    "answer": "None of the above",
+                    "isCorrect": false
+                }
+            ]
+        },
+        {
+            "question": "Яка з гонок є найновішою?",
+            "answers": [
+                {
+                    "answer": "Euro Truck Simulator 2",
+                    "isCorrect": false
+                },
+                {
+                    "answer": "Forza Horizon 4",
+                    "isCorrect": false
+                },
+                {
+                    "answer": "Need for Speed Payback",
+                    "isCorrect": true
+                },
+                {
+                    "answer": "All of the above",
+                    "isCorrect": false
+                }
+            ]
+        }
+    ]
+}

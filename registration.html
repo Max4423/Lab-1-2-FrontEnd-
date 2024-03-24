@@ -11,27 +11,33 @@
         <h1>Registration</h1>
     </header>
 
-    <section>
+    <form>
         <h2>Login</h2>
         <input type="text" placeholder="Enter login">
-    </section>
+    </form>
 
-    <section>
+    <form>
         <h2>Password</h2>
         <input type="password" placeholder="Enter password">
-    </section>
+    </form>
 
-    <section>
+    <form>
         <h2>Personal data</h2>
         <label for="input1">Name</label>
         <input type="text" id="input1" name="input1"><br>
         <label for="input2">Surname</label>
         <input type="text" id="input2" name="input2"><br>
-        <label for="input3">Age</label>
-        <input type="text" id="input2" name="input2"><br>
-    </section>
+        <label for="email">Enter your email:</label>
+        <input type="email" id="email" name="email">
+        <label for="birthday">Birthday:</label>
+        <input type="date" id="birthday" name="birthday"><br>
+        <label for="favcolor">Select your favorite color:</label>
+        <input type="color" id="favcolor" name="favcolor"><br>
+        <label for="quantity">Number of players (between 1 and 5):</label>
+        <input type="number" id="quantity" name="quantity" min="1" max="5">
+    </form>
 
-    <section>
+    <form>
         <h2>What games you want to buy</h2>
         <input type="checkbox" id="checkbox1" name="checkbox1">
         <label for="checkbox1">Forza Horizon 5</label><br>
@@ -39,38 +45,194 @@
         <label for="checkbox2">Need for Speed™ Payback</label><br>
         <input type="checkbox" id="checkbox3" name="checkbox3">
         <label for="checkbox3">Euro Truck Simulator 2</label><br>
-    </section>
+    </form>
 
-    <section>
+    <form>
         <h2>Type of Payment</h2>
         <input type="radio" id="radio1" name="radio" value="option1">
         <label for="radio1">Credit card</label><br>
         <input type="radio" id="radio2" name="radio" value="option2">
         <label for="radio2">PayPal</label><br>
-    </section>
+    </form>
 
-
-    <section>
+    <form>
         <h2>CV</h2>
         <input type="file" id="file" name="file">
-    </section>
+    </form>
 
-    <section>
+    <form>
         <h2>Feedback</h2>
         <textarea id="textarea" name="textarea" rows="4" cols="50"></textarea>
-    </section>
+    </form>
 
-    <section>
+    <form>
         <h2>Purpose</h2>
         <select name="dropdown">
             <option value="option1">gift</option>
             <option value="option2">for personal use</option>
         </select>
-    </section>Ф
+    </form>
 
-    <section>
-        <button type="button">Submit</button>
-        <button type="button">Reset</button>
-    </section>
+    <form>
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+    </form>
+    <form>
+        <center>
+    <button id="showPayPalKeysButton">Show Users with PayPal payment method</button>
+    <button id="showEuroTruckKeysButton">Show Users which buy Euro Truck Simulator 2 </button>
+    <button id="showValueLessThanThreeButton">Show Users, number of players less than 3</button>
+        </center>
+    </form> 
 </body>
 </html>
+
+<script>
+    function saveFormData() {
+        var login = document.querySelector('input[type="text"]').value;
+        var password = document.querySelector('input[type="password"]').value;
+        var name = document.getElementById('input1').value;
+        var surname = document.getElementById('input2').value;
+        var email = document.getElementById('email').value;
+        var birthday = document.getElementById('birthday').value;
+        var favColor = document.getElementById('favcolor').value;
+        var quantity = document.getElementById('quantity').value;
+
+        var purpose = "";
+        var dropdown = document.querySelector('select[name="dropdown"]');
+        if (dropdown.selectedIndex !== -1) {
+            purpose = dropdown.options[dropdown.selectedIndex].text;
+        }
+
+        var paymentType = "";
+        var radio1 = document.getElementById('radio1');
+        var radio2 = document.getElementById('radio2');
+
+        if (radio1.checked) {
+            paymentType = document.querySelector('label[for="radio1"]').textContent.trim();
+        } else if (radio2.checked) {
+            paymentType = document.querySelector('label[for="radio2"]').textContent.trim();
+        }
+
+        var games = [];
+        var checkbox1 = document.getElementById('checkbox1');
+        var checkbox2 = document.getElementById('checkbox2');
+        var checkbox3 = document.getElementById('checkbox3');
+
+        if (checkbox1.checked) {
+            games.push(document.querySelector('label[for="checkbox1"]').textContent.trim());
+        }
+        if (checkbox2.checked) {
+            games.push(document.querySelector('label[for="checkbox2"]').textContent.trim());
+        }
+        if (checkbox3.checked) {
+            games.push(document.querySelector('label[for="checkbox3"]').textContent.trim());
+        }
+
+        var feedback = document.getElementById('textarea').value;
+
+        localStorage.setItem('login_' + login, login);
+        localStorage.setItem('password_' + login, password);
+        localStorage.setItem('name_' + login, name);
+        localStorage.setItem('surname_' + login, surname);
+        localStorage.setItem('email_' + login, email);
+        localStorage.setItem('birthday_' + login, birthday);
+        localStorage.setItem('favColor_' + login, favColor);
+        localStorage.setItem('quantity_' + login, quantity);
+        localStorage.setItem('games_' + login, JSON.stringify(games));
+        localStorage.setItem('paymentType_' + login, paymentType);
+        localStorage.setItem('purpose_' + login, purpose);
+        localStorage.setItem('feedback_' + login, feedback);
+    }
+
+    function resetForm() {
+        var forms = document.getElementsByTagName('form'); 
+        for (var i = 0; i < forms.length; i++) {
+            forms[i].reset(); 
+        }
+    }
+
+    document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
+        event.preventDefault(); 
+        saveFormData(); 
+        alert('Form data saved successfully.');
+    });
+
+    document.querySelector('button[type="reset"]').addEventListener('click', function(event) {
+        resetForm(); 
+    });
+
+    function searchAndDisplayPayPalKeys() {
+            var paypalKeys = []; 
+
+            for (var key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    if (localStorage.getItem(key) === 'PayPal') {
+                        paypalKeys.push(key); 
+                    }
+                }
+            }
+
+            if (paypalKeys.length > 0) {
+                alert('Користувачі, які використовують метод оплати PayPal ' + paypalKeys.join(', ')); 
+            } else {
+                alert('Користувачів не знайдено'); 
+            }
+        }
+        document.getElementById('showPayPalKeysButton').addEventListener('click', function() {
+            searchAndDisplayPayPalKeys(); 
+        });
+
+        function searchAndDisplayEuroTruckKeys() {
+        var euroTruckKeys = []; 
+
+        for (var key in localStorage) {
+            if (localStorage.hasOwnProperty(key)) {
+                var gamesValue = localStorage.getItem(key);
+                if (gamesValue.includes('Euro Truck Simulator 2')) {
+                    euroTruckKeys.push(key); 
+                }
+            }
+        }
+
+        if (euroTruckKeys.length > 0) {
+            alert('Користувачі, у списку ігор яких є Euro Truck Simulator 2 ' + euroTruckKeys.join(', ')); 
+        } else {
+            alert('Користувачів не знайдено'); 
+        }
+    }
+
+    document.getElementById('showEuroTruckKeysButton').addEventListener('click', function() {
+        searchAndDisplayEuroTruckKeys(); 
+    });
+
+    
+    function searchAndDisplayKeysWithValueLessThanThree() {
+        var keysWithValueLessThanThree = []; 
+
+        for (var key in localStorage) {
+            if (localStorage.hasOwnProperty(key)) {
+                var value = localStorage.getItem(key);
+                if (parseInt(value) < 3) { 
+                    keysWithValueLessThanThree.push(key); 
+                }
+            }
+        }
+
+        if (keysWithValueLessThanThree.length > 0) {
+            alert('Користувачі, кількість гравців у команді яких менша за 3 ' + keysWithValueLessThanThree.join(', ')); 
+        } else {
+            alert('Користувачів не знайдено'); 
+        }
+    }
+
+    
+    document.getElementById('showValueLessThanThreeButton').addEventListener('click', function() {
+        searchAndDisplayKeysWithValueLessThanThree(); 
+    });
+        </script>
+
+
+
+
+

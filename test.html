@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест про комп'ютерні ігри</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        form {
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+
+        h2 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input[type="text"],
+        form input[type="password"],
+        form textarea,
+        form select {
+            width: 50%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        form input[type="checkbox"],
+        form input[type="radio"] {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        form button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #555;
+        }
+
+        /* Стилізація елементів форми */
+        form input[type="color"] {
+            height: 50px; 
+            width: 100px;
+        }
+
+        form input[type="number"] {
+            width: 100px; 
+        }
+
+        form textarea {
+            resize: vertical; 
+        }
+
+        form input[type="checkbox"],
+        form input[type="radio"] {
+            transform: scale(1.2); 
+        }
+
+        form input[type="date"],
+        form input[type="number"],
+        form input[type="color"] {
+            padding: 8px; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Тест про комп'ютерні ігри</h1>
+    </header>
+    <form id="quizForm">
+        <h2>Питання 1: Хто є розробником гри Euro Truck Simulator 2?</h2>
+        <label>
+            <input type="radio" name="question1" value="SCS Software"> SCS Software
+        </label>
+        <label>
+            <input type="radio" name="question1" value="Electronic Arts"> Electronic Arts
+        </label>
+        <label>
+            <input type="radio" name="question1" value="Turn 10 Studios"> Turn 10 Studios
+        </label>
+        <label>
+            <input type="radio" name="question1" value="Ubisoft"> Ubisoft
+        </label>
+
+        <h2>Питання 2: В якому році вийшла гра Forza Horizon 4?</h2>
+        <label>
+            <input type="radio" name="question2" value="2018"> 2018
+        </label>
+        <label>
+            <input type="radio" name="question2" value="2016"> 2016
+        </label>
+        <label>
+            <input type="radio" name="question2" value="2019"> 2019
+        </label>
+        <label>
+            <input type="radio" name="question2" value="2020"> 2020
+        </label>
+
+        <h2>Питання 3: Яка з гонок є серією від Electronic Arts?</h2>
+        <label>
+            <input type="radio" name="question3" value="Euro Truck Simulator 2"> Euro Truck Simulator 2
+        </label>
+        <label>
+            <input type="radio" name="question3" value="Forza Horizon 4"> Forza Horizon 4
+        </label>
+        <label>
+            <input type="radio" name="question3" value="Need for Speed Payback"> Need for Speed Payback
+        </label>
+        <label>
+            <input type="radio" name="question3" value="None of the above"> None of the above
+        </label>
+
+        
+        <h2>Питання 4: Яка з гонок відтворює перевезення вантажів?</h2>
+        <label>
+            <input type="radio" name="question4" value="Euro Truck Simulator 2"> Euro Truck Simulator 2
+        </label>
+        <label>
+            <input type="radio" name="question4" value="Forza Horizon 4"> Forza Horizon 4
+        </label>
+        <label>
+            <input type="radio" name="question4" value="Need for Speed Payback"> Need for Speed Payback
+        </label>
+        <label>
+            <input type="radio" name="question4" value="None of the above"> None of the above
+        </label>
+
+        <h2>Питання 5: Яка з гонок є найновішою?</h2>
+        <label>
+            <input type="radio" name="question5" value="Euro Truck Simulator 2"> Euro Truck Simulator 2
+        </label>
+        <label>
+            <input type="radio" name="question5" value="Forza Horizon 4"> Forza Horizon 4
+        </label>
+        <label>
+            <input type="radio" name="question5" value="Need for Speed Payback"> Need for Speed Payback
+        </label>
+        <label>
+            <input type="radio" name="question5" value="All of the above"> All of the above
+        </label>
+
+        <button type="submit">Очистити форму</button>
+    </form>
+    <div id="results"></div>
+</body>
+</html>
+
+<script>
+    async function fetchAnswers() {
+        const response = await fetch('answers.json');
+        const data = await response.json();
+        return data;
+    }
+
+    function showResults(score, totalQuestions, quizData) {
+        const resultsContainer = document.getElementById('results');
+        resultsContainer.innerHTML = `<h2>Результати:</h2>`;
+        resultsContainer.innerHTML += `<p>Ваш результат: ${score} з ${totalQuestions}</p>`;
+
+        quizData.questions.forEach((question, index) => {
+            const correctAnswer = question.answers.find(answer => answer.isCorrect);
+            const questionNumber = index + 1;
+            const answerContainer = document.createElement('div');
+            answerContainer.textContent = `Питання ${questionNumber}: Правильна відповідь - ${correctAnswer.answer}`;
+
+            const selectedAnswer = document.querySelector(`input[name="question${questionNumber}"]:checked`);
+            if (selectedAnswer && selectedAnswer.value === correctAnswer.answer) {
+                // Підсвічуємо правильну відповідь зеленим кольором
+                answerContainer.style.color = 'green';
+                answerContainer.textContent += ' (Правильно)';
+        } else {
+             answerContainer.textContent += ' (Неправильно)';
+            }
+
+            resultsContainer.appendChild(answerContainer);
+        });
+
+        // Зберігаємо результат тесту в localstorage
+        localStorage.setItem('quizResult', score);
+
+        // Отримуємо з localstorage всі результати тесту користувачів
+        const allResults = JSON.parse(localStorage.getItem('allQuizResults')) || [];
+        allResults.push(score);
+
+        // Зберігаємо всі результати тесту користувачів у localstorage
+        localStorage.setItem('allQuizResults', JSON.stringify(allResults));
+
+        // Вираховуємо середній бал за тест по всіх користувачах
+        const totalScore = allResults.reduce((acc, curr) => acc + curr, 0);
+        const averageScore = totalScore / allResults.length || 0;
+
+        // Виводимо середній бал
+        resultsContainer.innerHTML += `<p>Середній бал за тест: ${averageScore.toFixed(2)}</p>`;
+    }
+
+    async function checkAnswers(event) {
+        event.preventDefault();
+        const formData = new FormData(document.getElementById('quizForm'));
+        const quizData = await fetchAnswers();
+        let score = 0;
+
+        quizData.questions.forEach((question, index) => {
+            const selectedAnswer = formData.get(`question${index + 1}`);
+            const correctAnswer = question.answers.find(answer => answer.isCorrect);
+
+            if (selectedAnswer === correctAnswer.answer) {
+                score++;
+            }
+        });
+
+        showResults(score, quizData.questions.length, quizData);
+    }
+
+    const submitButton = document.createElement('button');
+    submitButton.textContent = 'Перевірити відповіді';
+    submitButton.addEventListener('click', checkAnswers);
+    document.getElementById('quizForm').appendChild(submitButton);
+
+    window.onload = function() {
+  const canvas = document.getElementById("myCanvas");
+  const ctx = canvas.getContext("2d");
+  const img = document.getElementById("scream");
+  ctx.drawImage(img, 10, 10);
+};
+</script>
